@@ -1,21 +1,25 @@
 ﻿using System.Data;
+using System.Data.OleDb;
 using MySql.Data.MySqlClient;
 using Sysco_dbf.Configuracion;
 
 namespace Sysco_dbf.Datos
 {
-    class MySQL
+    class VFP2MySql
     {
-        private MySqlConnection _conexion;
+        private MySqlConnection _conexionMySql;
         public static string StrSelectQuery;
-        public MySQL()
+        private static OleDbConnection _conexionVFP;
+        public VFP2MySql()
         {
             var connectionString = "SERVER=" + Configuracion.Configuracion.General.MysqlHost + ";" + "DATABASE=" +
                           Configuracion.Configuracion.General.MysqlDatabase + ";" + "UID="
                           + Configuracion.Configuracion.General.MysqlUsuario + ";" + "PASSWORD="
                           + Configuracion.Configuracion.General.MysqlPassword + ";";
 
-            _conexion = new MySqlConnection(connectionString);
+            _conexionMySql = new MySqlConnection(connectionString);
+            
+
         }
         public string Query(int seleccion)
         {
@@ -63,7 +67,7 @@ namespace Sysco_dbf.Datos
                 {
                     var adaptador = new MySqlDataAdapter
                     {
-                        SelectCommand = new MySqlCommand(Query(seleccion), _conexion)
+                        SelectCommand = new MySqlCommand(Query(seleccion), _conexionMySql)
                     };
                     var tabla = new DataTable();
                     adaptador.Fill(tabla);
@@ -77,11 +81,61 @@ namespace Sysco_dbf.Datos
             }
         }
 
+        public DataTable SelectVfp(int seleccion)
+        {
+            try
+            {
+                if (AbrirConexionVfp())
+                {
+                    var resultado = new DataTable();
+                    var myQuery = new OleDbCommand(Query(2), _conexionVFP);
+                    var da = new OleDbDataAdapter(myQuery);
+                    da.Fill(resultado);
+                    CerrarConexionVfp();
+                    return resultado;
+                }
+                else return null;
+            }
+            finally
+            {
+                CerrarConexionVfp();
+            }
+        }
+
+        internal bool AbrirConexionVfp()
+        {
+            try
+            {
+                _conexionVFP = new OleDbConnection(@"Driver={Microsoft Visual FoxPro Driver};SourceType=DBF;SourceDB=" +
+                              Configuracion.Configuracion.General.VisualFoxProDireccion + @"\;"); 
+                _conexionVFP.Open();
+                return true;
+            }
+            catch (OleDbException oe)
+            {
+                CargarConfiguracion.Log(oe.Message);
+                throw;
+            }
+        }
+
+        internal bool CerrarConexionVfp()
+        {
+            try
+            {
+                _conexionVFP.Close();
+                return true;
+            }
+            catch (OleDbException ex)
+            {
+                CargarConfiguracion.Log(ex.Message);
+                throw ex;
+            }
+        }
         internal bool AbrirConexion()
         {
             try
             {
-                _conexion.Open();
+                _conexionMySql.Open();
                 return true;
             }
             catch (MySqlException ex)
@@ -94,7 +148,7 @@ namespace Sysco_dbf.Datos
         {
             try
             {
-                _conexion.Close();
+                _conexionMySql.Close();
                 return true;
             }
             catch (MySqlException ex)
