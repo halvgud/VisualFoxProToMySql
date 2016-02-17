@@ -1,7 +1,9 @@
 ﻿using System.Data;
+using System.Data.Odbc;
 using System.Data.OleDb;
 using MySql.Data.MySqlClient;
 using Sysco_dbf.Configuracion;
+using System.Windows.Forms;
 
 namespace Sysco_dbf.Datos
 {
@@ -9,7 +11,7 @@ namespace Sysco_dbf.Datos
     {
         private MySqlConnection _conexionMySql;
         public static string StrSelectQuery;
-        private static OleDbConnection _conexionVFP;
+        private static OdbcConnection _conexionVFP;
         public VFP2MySql()
         {
             var connectionString = "SERVER=" + Configuracion.Configuracion.General.MysqlHost + ";" + "DATABASE=" +
@@ -26,20 +28,7 @@ namespace Sysco_dbf.Datos
             switch (seleccion)
             {
                 case 1:
-                    StrSelectQuery = @"select
-                    emplnum,
-                    nombre,
-                    apellido1,
-                    apellido2,
-                    sexo,
-                    empltur,
-
-                    empldep,
-                    (case when emplbaj!='' then 'I' else 'A' end) as estado,
-                    imss
-                    from 
-                    EMPLMST.dbf
-                ";
+                    StrSelectQuery = @"select  emplnum,  nombre, apellido1, apellido2, sexo, empltur, empldep, imss,'A' as estado from C:\Git\Sysco\scproject\emplmst.dbf ";
                     break;
                 case 2:
                     StrSelectQuery = @"select
@@ -54,6 +43,8 @@ namespace Sysco_dbf.Datos
                         id_estado
                         from empleado";  
                     break;
+            case3:
+                    StrSelectQuery = @"";
             }
 
             return StrSelectQuery;
@@ -88,8 +79,8 @@ namespace Sysco_dbf.Datos
                 if (AbrirConexionVfp())
                 {
                     var resultado = new DataTable();
-                    var myQuery = new OleDbCommand(Query(2), _conexionVFP);
-                    var da = new OleDbDataAdapter(myQuery);
+                    var myQuery = new OdbcCommand(Query(seleccion), _conexionVFP);
+                    var da = new OdbcDataAdapter(myQuery);
                     da.Fill(resultado);
                     CerrarConexionVfp();
                     return resultado;
@@ -101,13 +92,61 @@ namespace Sysco_dbf.Datos
                 CerrarConexionVfp();
             }
         }
+        public bool Existe(string seleccion)
+        {
+            var query = "select 1 from empleado where id_empleado='@empleado'";
 
-        internal bool AbrirConexionVfp()
+            try
+            {
+                AbrirConexion();
+                MySqlDataAdapter MyDA = new MySqlDataAdapter();
+                MyDA.SelectCommand= new MySqlCommand(query, _conexionMySql);
+                MyDA.SelectCommand.Parameters.AddWithValue("@empleado", seleccion);
+                MySqlDataReader reader = MyDA.SelectCommand.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw e;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+        }
+
+        public void Actualizar(int seleccion)
         {
             try
             {
-                _conexionVFP = new OleDbConnection(@"Driver={Microsoft Visual FoxPro Driver};SourceType=DBF;SourceDB=" +
-                              Configuracion.Configuracion.General.VisualFoxProDireccion + @"\;"); 
+
+                var cmd = new MySqlCommand { CommandText = Query(seleccion) };
+                if (!AbrirConexion()) return;
+                cmd.Connection = _conexionMySql;
+                cmd.ExecuteNonQuery();
+            }
+            catch (MySqlException e)
+            {
+                CargarConfiguracion.Log(e.Message);
+                throw;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+        }
+        internal bool AbrirConexionVfp()
+        {
+            try     
+            {
+                _conexionVFP = new OdbcConnection(@"Driver={Microsoft Visual FoxPro Driver};SourceType=DBF;SourceDB=" + @"C:\Git\Sysco\scproject\emplmst.dbf" + ";Exclusive=No; Collate=Machine;NULL=NO;DELETED=YES;BACKGROUNDFETCH=NO;"); 
                 _conexionVFP.Open();
                 return true;
             }

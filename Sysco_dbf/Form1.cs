@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sysco_dbf.Configuracion;
 using Sysco_dbf.Datos;
@@ -26,28 +27,34 @@ namespace Sysco_dbf
 
         private void Comparar()
         {
-            DataTable mySqlDataTable = new DataTable();
-            DataTable visualFoxProDataTable = new DataTable();
-            mySqlDataTable = _vfp2mysql.Select(1);
-            visualFoxProDataTable = _vfp2mysql.SelectVfp(2);
-                    var query = from r1 in mySqlDataTable.AsEnumerable()
-                        join r2 in visualFoxProDataTable.AsEnumerable()
-                        on r1.Field<string>("emplnum") equals r2.Field<string>("id_empleado")
-                        where !r1.Field<int>("score").Equals(r2.Field<int>("score")) || 
-                                !r1.Field<int>("score").Equals(r2.Field<int>("score"))
-                        select new
-                        {
-                            name = r1.Field<string>("name"),
-                            score1 = r1.Field<int>("score"),
-                            score2 = r2.Field<int>("score")
-                        };
+            var mySqlDataTable = new DataTable();
+            var visualFoxProDataTable = new DataTable();
+            mySqlDataTable = _vfp2mysql.Select(2);
+            visualFoxProDataTable = _vfp2mysql.SelectVfp(1);
 
-            foreach (var item in query)
-            {                //if(item.score1 != item.score2)
-
-                Console.WriteLine("{0} {1} {2} ", item.name, item.score1, item.score2);
-
+            var matched = from table1 in visualFoxProDataTable.AsEnumerable()
+                          join table2 in mySqlDataTable.AsEnumerable() on table1.Field<string>("emplnum") equals table2.Field<string>("id_empleado").PadLeft(5, '0')
+                          where table1.Field<int>("nombre") == table2.Field<int>("nombre") || table1.Field<string>("apellido1") == table2.Field<string>("paterno") || table1.Field<object>("apellido2") == table2.Field<object>("materno")  || table1.Field<String>("imss") == table2.Field<String>("nss") || table1.Field<String>("estado") == table2.Field<String>("estado")
+                          select table1;
+            var missing = from table1 in visualFoxProDataTable.AsEnumerable()
+                          where !matched.Contains(table1)
+                          select table1;
+            DataTable dt = missing.CopyToDataTable();
+            
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (_vfp2mysql.Existe(dt.Rows[i][0].ToString()))
+                {
+                   // _vfp2mysql.Actualizar();
+                }
+                else
+                {
+                   // _vfp2mysql.Insertar();
+                }
             }
+            
+
+
         }
     }
 }
