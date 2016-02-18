@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Configuracion\CargarConfiguracion.cs" />
     <Compile Include="Configuracion\Configuracion.cs" />
+    <Compile Include="Datos\Empleado.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

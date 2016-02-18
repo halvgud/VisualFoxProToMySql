@@ -50,7 +50,7 @@ namespace Sysco_dbf
                           select table1;
             DataTable dt = missing.CopyToDataTable();
             Empleado empleado = new Empleado();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (var i = 0; i < dt.Rows.Count; i++)
             {
                 
                 empleado.id_empleado = dt.Rows[i][0].ToString().TrimStart('0');
@@ -62,15 +62,7 @@ namespace Sysco_dbf
                 empleado.Id_area = dt.Rows[i][6].ToString();
                 empleado.Nss = dt.Rows[i][7].ToString();
                 empleado.Id_estado = dt.Rows[i][8].ToString();
-                if (_vfp2mysql.Existe(dt.Rows[i][0].ToString()))
-                {
-                    
-                   _vfp2mysql.Actualizar(1,empleado);
-                }
-                else
-                {
-                    _vfp2mysql.Insertar(1,empleado);
-                }
+                _vfp2mysql.Actualizar(_vfp2mysql.Existe(dt.Rows[i][0].ToString()) ? 1 : 2, empleado);
             }
             
 

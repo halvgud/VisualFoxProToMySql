@@ -1,0 +1,4 @@
+17/02/2016 22:46:32::Erreur de syntaxe près de '='JOSE GUADALUPE             ',materno='NEVARES                    ',paterno='BA' à la ligne 1
+17/02/2016 22:51:22::Erreur de syntaxe près de '='JOSE GUADALUPE',materno='NEVARES',paterno='BARRERA',sexo='M',id_turno='4',id_a' à la ligne 1
+17/02/2016 22:54:46::Erreur de syntaxe près de 'values('6','SANDRA LILIAN              ','IBARRA                     ','MACIAS  ' à la ligne 1
+17/02/2016 22:58:45::Erreur de syntaxe près de 'values('6','SANDRA LILIAN','IBARRA','MACIAS','F','2','185','33856641858','A')' à la ligne 1

@@ -56,16 +56,29 @@ namespace Sysco_dbf.Datos
             {
                 case 1:
                     StrSelectQuery = "" +
-                                     "update empleado" +
-                                     "set nombre='"+empleado.Nombre +"'"+
-                                     ",materno='"+empleado.Materno+"'"+
-                                     ",paterno='"+empleado.Paterno+"'"+
-                                    ",sexo='"+empleado.Sexo+"'"+
-                                    ",id_turno='"+empleado.Id_turno+"'"+
-                                    ",id_area='"+empleado.Id_area+"'"+
-                                    ",nss='"+empleado.Nss+"'"+
+                                     "update empleado " +
+                                     "set nombre='"+empleado.Nombre.Trim() +"'"+
+                                     ",materno='" + empleado.Materno.Trim() + "'" +
+                                     ",paterno='" + empleado.Paterno.Trim() + "'" +
+                                    ",sexo='" + empleado.Sexo.Trim() + "'" +
+                                    ",id_turno='" + empleado.Id_turno.Trim() + "'" +
+                                    ",id_area='" + empleado.Id_area.Trim() + "'" +
+                                    ",nss='" + empleado.Nss.Trim() + "'" +
                                     ",id_estado='"+empleado.Id_estado+"'"
-                                    +"where id_empleado='"+empleado.id_empleado+"'";
+                                    +" where id_empleado='"+empleado.id_empleado+"'";
+                    break;
+                case 2:
+                    StrSelectQuery = "insert into empleado(id_empleado,nombre,paterno,materno,sexo,id_turno" +
+                                     ",id_area,nss,id_estado) values(" +
+                                     "'" + empleado.id_empleado.Trim() + "'," +
+                                     "'" + empleado.Nombre.Trim() + "'," +
+                                     "'" + empleado.Paterno.Trim() + "'," +
+                                     "'" + empleado.Materno.Trim() + "'," +
+                                     "'" + empleado.Sexo.Trim() + "'," +
+                                     "'" + empleado.Id_turno.Trim() + "'," +
+                                     "'" + empleado.Id_area.Trim() + "'," +
+                                     "'" + empleado.Nss.Trim() + "'," +
+                                     "'" + empleado.Id_estado.Trim() + "')";
                     break;
             }
             return StrSelectQuery;
