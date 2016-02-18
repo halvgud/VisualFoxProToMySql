@@ -39,8 +39,8 @@ namespace Sysco_dbf.Datos
                         sexo, 
                         id_turno,
                         id_area,
-                        id_departamento,
-                        id_estado
+                        nss,
+                        id_estado as estado
                         from empleado";  
                     break;
             case3:
@@ -50,6 +50,26 @@ namespace Sysco_dbf.Datos
             return StrSelectQuery;
         }
 
+        public string Query(int seleccion, Empleado empleado)
+        {
+            switch (seleccion)
+            {
+                case 1:
+                    StrSelectQuery = "" +
+                                     "update empleado" +
+                                     "set nombre='"+empleado.Nombre +"'"+
+                                     ",materno='"+empleado.Materno+"'"+
+                                     ",paterno='"+empleado.Paterno+"'"+
+                                    ",sexo='"+empleado.Sexo+"'"+
+                                    ",id_turno='"+empleado.Id_turno+"'"+
+                                    ",id_area='"+empleado.Id_area+"'"+
+                                    ",nss='"+empleado.Nss+"'"+
+                                    ",id_estado='"+empleado.Id_estado+"'"
+                                    +"where id_empleado='"+empleado.id_empleado+"'";
+                    break;
+            }
+            return StrSelectQuery;
+        }
         public DataTable Select(int seleccion)
         {
             try
@@ -94,23 +114,22 @@ namespace Sysco_dbf.Datos
         }
         public bool Existe(string seleccion)
         {
-            var query = "select 1 from empleado where id_empleado='@empleado'";
+            var query = "select 1 from empleado where id_empleado='"+seleccion.TrimStart('0')+"'";
 
             try
             {
-                AbrirConexion();
-                MySqlDataAdapter MyDA = new MySqlDataAdapter();
-                MyDA.SelectCommand= new MySqlCommand(query, _conexionMySql);
-                MyDA.SelectCommand.Parameters.AddWithValue("@empleado", seleccion);
-                MySqlDataReader reader = MyDA.SelectCommand.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+             using (MySqlCommand cmd = new MySqlCommand())
+             {
+                 AbrirConexion();
+            cmd.Connection = _conexionMySql;
+                 cmd.CommandText = query;
+            //cmd.Parameters.AddWithValue("empleado", seleccion.TrimStart('0'));
+            //var result = cmd.ExecuteScalar();
+             //    var x = cmd.ExecuteReader();
+           // if ( x> 0)
+                 return cmd.ExecuteReader().HasRows;
+             }
+                return false;
             }
             catch (MySqlException e)
             {
@@ -122,12 +141,12 @@ namespace Sysco_dbf.Datos
             }
         }
 
-        public void Actualizar(int seleccion)
+        public void Actualizar(int seleccion,Empleado emp)
         {
             try
             {
 
-                var cmd = new MySqlCommand { CommandText = Query(seleccion) };
+                var cmd = new MySqlCommand { CommandText = Query(seleccion,emp) };
                 if (!AbrirConexion()) return;
                 cmd.Connection = _conexionMySql;
                 cmd.ExecuteNonQuery();
