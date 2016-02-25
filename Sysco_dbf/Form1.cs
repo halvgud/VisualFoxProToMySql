@@ -39,34 +39,34 @@ namespace Sysco_dbf
                         (table1, table2) => new {table1, table2})
                     .Where(
                         @t =>
-                            @t.table1.Field<string>("nombre") == @t.table2.Field<string>("nombre") &&
-                            @t.table1.Field<string>("apellido1") == @t.table2.Field<string>("paterno") &&
-                            @t.table1.Field<string>("apellido2") == @t.table2.Field<string>("materno") &&
-                            @t.table1.Field<string>("imss") == @t.table2.Field<string>("nss") &&
-                            @t.table1.Field<string>("estado") == @t.table2.Field<string>("estado"))
+                            @t.table1.Field<string>("nombre").Trim() == @t.table2.Field<string>("nombre") &&
+                            @t.table1.Field<string>("apellido1").Trim() == @t.table2.Field<string>("paterno") &&
+                            @t.table1.Field<string>("apellido2").Trim() == @t.table2.Field<string>("materno") &&
+                            @t.table1.Field<string>("imss").Trim() == @t.table2.Field<string>("nss") &&
+                            @t.table1.Field<string>("estado").Trim() == @t.table2.Field<string>("estado"))
                     .Select(@t => @t.table1);
             var missing = from table1 in visualFoxProDataTable.AsEnumerable()
                           where !matched.Contains(table1)
                           select table1;
-            DataTable dt = missing.CopyToDataTable();
-            Empleado empleado = new Empleado();
-            for (var i = 0; i < dt.Rows.Count; i++)
+            if (missing.ToList().Count > 0)
             {
-                
-                empleado.id_empleado = dt.Rows[i][0].ToString().TrimStart('0');
-                empleado.Nombre = dt.Rows[i][1].ToString();
-                empleado.Paterno = dt.Rows[i][2].ToString();
-                empleado.Materno = dt.Rows[i][3].ToString();
-                empleado.Sexo = dt.Rows[i][4].ToString();
-                empleado.Id_turno = dt.Rows[i][5].ToString();
-                empleado.Id_area = dt.Rows[i][6].ToString();
-                empleado.Nss = dt.Rows[i][7].ToString();
-                empleado.Id_estado = dt.Rows[i][8].ToString();
-                _vfp2mysql.Actualizar(_vfp2mysql.Existe(dt.Rows[i][0].ToString()) ? 1 : 2, empleado);
+                DataTable dt = missing.CopyToDataTable();
+                Empleado empleado = new Empleado();
+                for (var i = 0; i < dt.Rows.Count; i++)
+                {
+
+                    empleado.id_empleado = dt.Rows[i][0].ToString().TrimStart('0');
+                    empleado.Nombre = dt.Rows[i][1].ToString();
+                    empleado.Paterno = dt.Rows[i][2].ToString();
+                    empleado.Materno = dt.Rows[i][3].ToString();
+                    empleado.Sexo = dt.Rows[i][4].ToString();
+                    empleado.Id_turno = dt.Rows[i][5].ToString();
+                    empleado.Id_area = dt.Rows[i][6].ToString();
+                    empleado.Nss = dt.Rows[i][7].ToString();
+                    empleado.Id_estado = dt.Rows[i][8].ToString();
+                    _vfp2mysql.Actualizar(_vfp2mysql.Existe(dt.Rows[i][0].ToString()) ? 1 : 2, empleado);
+                }
             }
-            
-
-
         }
     }
 }

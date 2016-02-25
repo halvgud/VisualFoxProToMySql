@@ -28,7 +28,14 @@ namespace Sysco_dbf.Datos
             switch (seleccion)
             {
                 case 1:
-                    StrSelectQuery = @"select  emplnum,  nombre, apellido1, apellido2, sexo, empltur, empldep, imss,'A' as estado from C:\Git\Sysco\scproject\emplmst.dbf ";
+                    StrSelectQuery ="select  emplnum,  nombre, apellido1, apellido2, "
+                        +" sexo, empltur, empldep, imss,'A' as estado from '"
+                        + Configuracion.Configuracion.General.VisualFoxProDireccion + "' where "
+                        +" empty(emplbaj) "
+                        +"union"
+                        +" select  emplnum,  nombre, apellido1, apellido2, sexo, "
+                                                +"empltur, empldep, imss,'I' as estado from '"+ Configuracion.Configuracion.General.VisualFoxProDireccion+  "' where "
+                        +" !empty(emplbaj)";
                     break;
                 case 2:
                     StrSelectQuery = @"select
@@ -40,7 +47,7 @@ namespace Sysco_dbf.Datos
                         id_turno,
                         id_area,
                         nss,
-                        id_estado as estado
+                        estado as estado
                         from empleado";  
                     break;
             case3:
@@ -50,7 +57,13 @@ namespace Sysco_dbf.Datos
             return StrSelectQuery;
         }
 
-        public string Query(int seleccion, Empleado empleado)
+        /// <summary>
+        /// Funcion meramente interna de la clase
+        /// </summary>
+        /// <param name="seleccion">id del query</param>
+        /// <param name="empleado">Clase con los valores del empleado</param>
+        /// <returns></returns>
+        internal string Query(int seleccion, Empleado empleado)
         {
             switch (seleccion)
             {
@@ -64,12 +77,12 @@ namespace Sysco_dbf.Datos
                                     ",id_turno='" + empleado.Id_turno.Trim() + "'" +
                                     ",id_area='" + empleado.Id_area.Trim() + "'" +
                                     ",nss='" + empleado.Nss.Trim() + "'" +
-                                    ",id_estado='"+empleado.Id_estado+"'"
+                                    ",estado='"+empleado.Id_estado+"'"
                                     +" where id_empleado='"+empleado.id_empleado+"'";
                     break;
                 case 2:
                     StrSelectQuery = "insert into empleado(id_empleado,nombre,paterno,materno,sexo,id_turno" +
-                                     ",id_area,nss,id_estado) values(" +
+                                     ",id_area,nss,estado) values(" +
                                      "'" + empleado.id_empleado.Trim() + "'," +
                                      "'" + empleado.Nombre.Trim() + "'," +
                                      "'" + empleado.Paterno.Trim() + "'," +
@@ -136,22 +149,19 @@ namespace Sysco_dbf.Datos
                  AbrirConexion();
             cmd.Connection = _conexionMySql;
                  cmd.CommandText = query;
-            //cmd.Parameters.AddWithValue("empleado", seleccion.TrimStart('0'));
-            //var result = cmd.ExecuteScalar();
-             //    var x = cmd.ExecuteReader();
-           // if ( x> 0)
                  return cmd.ExecuteReader().HasRows;
              }
-                return false;
+                
             }
             catch (MySqlException e)
             {
-                throw e;
+                CargarConfiguracion.Log(e.Message);
             }
             finally
             {
                 CerrarConexion();
             }
+            return false;
         }
 
         public void Actualizar(int seleccion,Empleado emp)

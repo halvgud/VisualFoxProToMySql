@@ -1,0 +1,17 @@
+c:\users\ryunotsuki\documents\visual studio 2012\Projects\Sysco_dbf\Sysco_dbf\bin\Debug\Sysco_dbf.exe.config
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.exe.config
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.exe
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.pdb
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.csprojResolveAssemblyReference.cache
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.Properties.Resources.resources
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.csproj.GenerateResource.Cache
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.exe
+C:\Users\Ryunotsuki\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.pdb
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.exe.config
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.exe
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.pdb
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.csprojResolveAssemblyReference.cache
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.Properties.Resources.resources
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\obj\Debug\Sysco_dbf.csproj.GenerateResource.Cache
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.exe
+C:\Users\Ryu\Documents\Visual Studio 2012\Projects\Sysco_dbf\VisualFoxProToMySql\Sysco_dbf\bin\Debug\Sysco_dbf.pdb
