@@ -18,6 +18,7 @@ namespace Sysco_dbf
             _cargarConfiguracion = new CargarConfiguracion();
             _vfp2mysql = new VFP2MySql();
             GetFile();
+            this.Close();
         }
         private void GetFile()
         {
@@ -37,7 +38,7 @@ namespace Sysco_dbf
                     CompararHilos();
                     actualizarUltimaModificacion(fecha);
                 }
-                System.Threading.Thread.Sleep(1000*60*60);
+                System.Threading.Thread.Sleep(1000*60*Configuracion.Configuracion.General.Tiempo);
                 GetFile();
             }
             catch (Exception e)

@@ -12,6 +12,7 @@ namespace Sysco_dbf.Configuracion
             public static string MysqlDatabase { get; set; }
             public static string VisualFoxProDireccion { get; set; }
             public static DateTime UltimaModificacion { get; set; }
+            public static int Tiempo { get; set; };
         }
     }
 }
