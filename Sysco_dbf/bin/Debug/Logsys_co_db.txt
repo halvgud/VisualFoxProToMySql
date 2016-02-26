@@ -3,3 +3,24 @@
 17/02/2016 22:54:46::Erreur de syntaxe près de 'values('6','SANDRA LILIAN              ','IBARRA                     ','MACIAS  ' à la ligne 1
 17/02/2016 22:58:45::Erreur de syntaxe près de 'values('6','SANDRA LILIAN','IBARRA','MACIAS','F','2','185','33856641858','A')' à la ligne 1
 24/02/2016 22:34:22::Unknown column 'id_estado' in 'field list'
+25/02/2016 20:44:09::Se han producido uno o varios errores.
+25/02/2016 20:44:49::Se han producido uno o varios errores.
+25/02/2016 20:45:40::Se han producido uno o varios errores.
+25/02/2016 20:52:54::Se han producido uno o varios errores.
+25/02/2016 21:32:09::Se han producido uno o varios errores.
+25/02/2016 21:36:10::Se han producido uno o varios errores.
+25/02/2016 21:42:57::Se han producido uno o varios errores.
+25/02/2016 21:44:01::Se han producido uno o varios errores.
+25/02/2016 21:47:17::Se han producido uno o varios errores.
+25/02/2016 22:09:41::Se han producido uno o varios errores.
+25/02/2016 22:09:54::Se han producido uno o varios errores.
+25/02/2016 22:11:15::Se han producido uno o varios errores.
+25/02/2016 22:12:50::Se han producido uno o varios errores.
+25/02/2016 22:18:41::No se puede encontrar la columna 0.
+26/02/2016 8:12:47::Se han producido uno o varios errores.
+26/02/2016 8:12:54::Se han producido uno o varios errores.
+26/02/2016 8:24:39::Se han producido uno o varios errores.
+26/02/2016 8:47:04::Se han producido uno o varios errores.
+26/02/2016 8:47:11::Se han producido uno o varios errores.
+26/02/2016 8:47:35::Se han producido uno o varios errores.
+26/02/2016 8:47:46::Se han producido uno o varios errores.

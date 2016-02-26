@@ -1,4 +1,6 @@
-﻿namespace Sysco_dbf.Configuracion
+﻿using System;
+
+namespace Sysco_dbf.Configuracion
 {
     public class Configuracion
     {
@@ -9,7 +11,7 @@
             public static string MysqlUsuario { get; set; }
             public static string MysqlDatabase { get; set; }
             public static string VisualFoxProDireccion { get; set; }
-
+            public static DateTime UltimaModificacion { get; set; }
         }
     }
 }

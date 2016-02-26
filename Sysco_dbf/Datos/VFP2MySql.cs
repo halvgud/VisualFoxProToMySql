@@ -50,8 +50,8 @@ namespace Sysco_dbf.Datos
                         estado as estado
                         from empleado";  
                     break;
-            case3:
-                    StrSelectQuery = @"";
+            case 3:
+                    StrSelectQuery = @""; break;
             }
 
             return StrSelectQuery;
